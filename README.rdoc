@@ -1,0 +1,3 @@
+Financial Tracker
+
+Tutorial app for tracking stock.
