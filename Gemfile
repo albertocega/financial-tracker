@@ -8,6 +8,8 @@ gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'twitter-bootstrap-rails'
 
+gem 'stock_quote'
+
 
 
 # Use SCSS for stylesheets

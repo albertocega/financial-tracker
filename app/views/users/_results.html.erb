@@ -1,0 +1,33 @@
+<% if params[action: 'search']%>
+  <div class = "results-block">
+      <%= bootstrap_flash%>
+  </div>
+<% end %>
+
+<% if @stock %>
+  <div class= "well results-block">
+  
+    <strong>Ticker:</strong> <%= @stock.tracker%>
+    <strong>Name:</strong> <%= @stock.name%>
+    <strong>Last price:</strong><%= @stock.last_price%>
+    
+    <% if current_user.can_add_stock?(@stock.tracker) %>
+      <%= link_to "Add to my portfolio", user_stocks_path( user: current_user,stock_ticker: @stock.tracker) , method: :post, 
+                                        class: "btn btn-xs btn-success" %>
+                                      
+    <% else %>
+      <span class = "label label-default">
+        <% if not current_user.under_stock_limit? %>
+          You've reached a maximum of 10 stocks
+        <% else %>
+        
+          You've already added this stock
+          
+        <% end %>
+      
+      </span>
+    
+    <% end %>
+    
+  </div>
+<% end %>
