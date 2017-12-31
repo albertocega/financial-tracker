@@ -39,4 +39,52 @@ class User < ActiveRecord::Base
     under_stock_limit? && !stock_already_added?(ticker_symbol)
     
   end
+  
+  def self.search(param)
+    
+    param.strip!
+    param.downcase!
+    results = ( matches_first_name(param) + matches_last_name(param) + matches_email(param)).uniq
+    return nil unless results
+    results
+    
+  end
+  
+  def self.matches_first_name(param)
+    
+    matches("first_name", param)
+    
+  end
+  
+  def self.matches_last_name(param)
+    
+    matches("last_name", param)
+    
+  end
+  
+  def self.matches_email(param)
+    
+    matches("email", param)
+    
+  end
+  
+  def self.matches(search, param)
+    
+     where("#{search} like?", "%#{param}%")
+    
+  end
+  
+    def except_current_user(users)
+      
+      users.reject { |user| user.id == self.id }
+      
+    end
+    
+  def not_friends_with?(friend_id)
+    
+    friendships.where(friend_id: friend_id).count < 1
+    
+  end
+
+
 end

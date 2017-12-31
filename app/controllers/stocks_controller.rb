@@ -1,30 +1,13 @@
 class StocksController < ApplicationController
     
-    
-    def search
-        
-        if params[:stock].present?
-        
-            @stock = Stock.new_from_lookup(params[:stock])
-            
-            if @stock == nil 
-                
-                flash.now[:danger] = "That symbol does not exist"
-                render partial: 'users/results'
-                
-            else
-            
-                render partial: 'users/results'
-            
-            end
-        
-        else
-            
-            flash.now[:danger]= "Please enter a symbol"
-            render partial: 'users/results'
-        
-        end
-        
+  def search1
+    if params[:stock].blank? 
+      flash.now[:danger] = "You have entered an empty search string"
+    else
+      @stock = Stock.new_from_lookup(params[:stock])
+      flash.now[:danger] = "You have entered an incorrect symbol" unless @stock
     end
+    render partial: 'users/result'
+  end
     
 end
